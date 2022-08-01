@@ -63,6 +63,7 @@ const Listrik = ({ match }) => {
           style={{
             minHeight: '25rem',
             minWidth: '49%',
+            marginTop: '2rem',
           }}
         >
           <CardHeader className="p-4">
@@ -76,6 +77,7 @@ const Listrik = ({ match }) => {
           style={{
             minHeight: '25rem',
             minWidth: '49%',
+            marginTop: '2rem',
           }}
         >
           <CardHeader className="p-4">
@@ -96,10 +98,10 @@ const Listrik = ({ match }) => {
             <h4 className="mr-2">Tegangan:</h4>
             <Badge color="warning">15V</Badge>
           </Row>
-          <Button onClick={activeHandler} color="success">
+          <Button onClick={activeHandler} color="success mr-2">
             Aktifkan listrik
           </Button>
-          <Button onClick={nonActiveHandler} color="danger ml-2">
+          <Button onClick={nonActiveHandler} color="danger">
             Matikan listrik
           </Button>
         </Colxx>

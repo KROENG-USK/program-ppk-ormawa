@@ -63,6 +63,7 @@ const Awp = ({ match }) => {
           style={{
             minHeight: '25rem',
             minWidth: '49%',
+            marginTop: '2rem',
           }}
         >
           <CardHeader className="p-4">
@@ -76,6 +77,7 @@ const Awp = ({ match }) => {
           style={{
             minHeight: '25rem',
             minWidth: '49%',
+            marginTop: '2rem',
           }}
         >
           <CardHeader className="p-4">
@@ -92,10 +94,10 @@ const Awp = ({ match }) => {
               {status ? 'Hidup' : 'Mati'}
             </Badge>
           </Row>
-          <Button onClick={activeHandler} color="success">
+          <Button onClick={activeHandler} color="success mr-2">
             Mulai penyiraman otomatis
           </Button>
-          <Button onClick={nonActiveHandler} color="danger ml-2">
+          <Button onClick={nonActiveHandler} color="danger">
             Hentikan penyiraman otomatis
           </Button>
         </Colxx>
