@@ -209,11 +209,13 @@ const TopNav = ({
             placeholder={messages['menu.search']}
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
-            onKeyPress={(e) => handleSearchInputKeyPress(e)}
+            // onKeyPress={(e) => handleSearchInputKeyPress(e)}
+            onKeyPress={() => {}}
           />
           <span
             className="search-icon"
-            onClick={(e) => handleSearchIconClick(e)}
+            // onClick={(e) => handleSearchIconClick(e)}
+            onClick={() => {}}
           >
             <i className="simple-icon-magnifier" />
           </span>
@@ -221,7 +223,7 @@ const TopNav = ({
       </div>
 
       <div className="navbar-right">
-        {isDarkSwitchActive && <TopnavDarkSwitch />}
+        {/* {isDarkSwitchActive && <TopnavDarkSwitch />} */}
         <div className="header-icons d-inline-block align-middle">
           <button
             className="header-icon btn btn-empty d-none d-sm-inline-block"
