@@ -54,7 +54,7 @@ const Listrik = ({ match }) => {
     <>
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="menu.awp-title" match={match} />
+          <Breadcrumb heading="menu.listrik" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>
