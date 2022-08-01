@@ -49,6 +49,7 @@ module.exports = {
   'menu.monitoring': 'Monitoring',
   'menu.market': 'Market',
   'menu.awp': 'AWP',
+  'menu.awp-title': 'Automatic Watering Plant',
   'menu.listrik': 'Listrik',
   'menu.jual': 'Jual',
   'menu.beli': 'Beli',
