@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -12,10 +11,7 @@ import './helpers/Firebase';
 import AppLocale from './lang';
 import ColorSwitcher from './components/common/ColorSwitcher';
 import { NotificationContainer } from './components/common/react-notifications';
-import {
-  isMultiColorActive,
-  adminRoot,
-} from './constants/defaultValues';
+import { isMultiColorActive, adminRoot } from './constants/defaultValues';
 import { getDirection } from './helpers/Utils';
 
 const ViewApp = React.lazy(() => import('./views/app'));

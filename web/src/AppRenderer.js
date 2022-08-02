@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from './redux/store';
 import reportWebVitals from './reportWebVitals';
 
-const App = React.lazy(() => import(/* webpackChunkName: "App" */ './App'));
+const App = React.lazy(() => import('./App'));
 
 const Main = () => {
   return (
