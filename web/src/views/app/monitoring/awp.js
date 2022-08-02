@@ -3,7 +3,8 @@ import {
   Row,
   Card,
   CardBody,
-  CardHeader,
+  CardTitle,
+  CardSubtitle,
   Button,
   Badge,
   Modal,
@@ -12,9 +13,9 @@ import {
 } from 'reactstrap';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import Breadcrumb from 'containers/navs/Breadcrumb';
-import Line from 'components/charts/Line';
 import { lineChartData } from 'data/charts';
 import { NotificationManager } from 'components/common/react-notifications';
+import { LineChart } from 'components/charts';
 
 const Awp = ({ match }) => {
   const [status, setStatus] = useState(true);
@@ -58,50 +59,44 @@ const Awp = ({ match }) => {
           <Separator className="mb-5" />
         </Colxx>
       </Row>
-      <Row className="d-flex justify-content-between mb-4">
-        <Card
-          style={{
-            minHeight: '25rem',
-            minWidth: '49%',
-            marginTop: '2rem',
-          }}
-        >
-          <CardHeader className="p-4">
-            <h4>Kelembapan tanah</h4>
-          </CardHeader>
-          <CardBody>
-            <Line data={lineChartData} shadow />
-          </CardBody>
-        </Card>
-        <Card
-          style={{
-            minHeight: '25rem',
-            minWidth: '49%',
-            marginTop: '2rem',
-          }}
-        >
-          <CardHeader className="p-4">
-            <h4>Penyiraman otomatis</h4>
-          </CardHeader>
-          <CardBody>
-            <Line data={lineChartData} shadow />
-          </CardBody>
-        </Card>
-        <Colxx className="mt-5 p-0">
-          <Row className="align-items-center mb-4 ml-1">
-            <h4 className="mr-2">Status:</h4>
-            <Badge pill color={status ? 'success' : 'danger'}>
-              {status ? 'Hidup' : 'Mati'}
-            </Badge>
-          </Row>
-          <Button onClick={activeHandler} color="success mr-2">
-            Mulai penyiraman otomatis
-          </Button>
-          <Button onClick={nonActiveHandler} color="danger">
-            Hentikan penyiraman otomatis
-          </Button>
+      <Row className="mb-4">
+        <Colxx xxs="12">
+          <Card>
+            <CardBody>
+              <CardTitle>Grafik AWP</CardTitle>
+              <Row>
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>Kelembapan tanah</CardSubtitle>
+                  <div className="chart-container">
+                    <LineChart shadow data={lineChartData} />
+                  </div>
+                </Colxx>
+
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>Penyiraman otomatis</CardSubtitle>
+                  <div className="chart-container">
+                    <LineChart shadow data={lineChartData} />
+                  </div>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
         </Colxx>
       </Row>
+      <Colxx className="p-0">
+        <Row className="align-items-center mb-4 ml-1">
+          <h4 className="mr-2">Status:</h4>
+          <Badge pill color={status ? 'success' : 'danger'}>
+            {status ? 'Hidup' : 'Mati'}
+          </Badge>
+        </Row>
+        <Button onClick={activeHandler} color="success mr-2">
+          Mulai penyiraman otomatis
+        </Button>
+        <Button onClick={nonActiveHandler} color="danger">
+          Hentikan penyiraman otomatis
+        </Button>
+      </Colxx>
       <Modal isOpen={modalOpen}>
         <ModalHeader>
           {status

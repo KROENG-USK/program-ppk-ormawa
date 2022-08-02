@@ -2,6 +2,12 @@ import { adminRoot } from './defaultValues';
 
 const data = [
   {
+    id: 'Dashboards',
+    icon: 'iconsminds-dashboard',
+    label: 'menu.dashboards',
+    to: `${adminRoot}/dashboards`,
+  },
+  {
     id: 'Monitoring',
     icon: 'iconsminds-monitor-analytics',
     label: 'menu.monitoring',

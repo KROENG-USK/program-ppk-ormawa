@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -14,10 +15,8 @@ import { NotificationContainer } from './components/common/react-notifications';
 import {
   isMultiColorActive,
   adminRoot,
-  UserRole,
 } from './constants/defaultValues';
 import { getDirection } from './helpers/Utils';
-import { ProtectedRoute } from './helpers/authHelper';
 
 const ViewApp = React.lazy(() => import('./views/app'));
 const ViewUser = React.lazy(() => import('./views/user'));
@@ -54,10 +53,14 @@ class App extends React.Component {
             <Suspense fallback={<div className="loading" />}>
               <Router>
                 <Switch>
-                  <ProtectedRoute
+                  {/* <ProtectedRoute
                     path={adminRoot}
                     component={ViewApp}
                     roles={[UserRole.Admin, UserRole.Editor]}
+                  /> */}
+                  <Route
+                    path={adminRoot}
+                    render={(props) => <ViewApp {...props} />}
                   />
                   <Route
                     path="/user"

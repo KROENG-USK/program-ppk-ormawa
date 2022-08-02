@@ -5,6 +5,7 @@ import AppLayout from 'layout/AppLayout';
 
 const Monitoring = React.lazy(() => import('./monitoring'));
 const Market = React.lazy(() => import('./market'));
+const Dashboards = React.lazy(() => import('./dashboards'));
 
 const App = ({ match }) => {
   return (
@@ -15,7 +16,11 @@ const App = ({ match }) => {
             <Redirect
               exact
               from={`${match.url}/`}
-              to={`${match.url}/monitoring`}
+              to={`${match.url}/dashboards`}
+            />
+            <Route
+              path={`${match.url}/dashboards`}
+              render={(props) => <Dashboards {...props} />}
             />
             <Route
               path={`${match.url}/monitoring`}
