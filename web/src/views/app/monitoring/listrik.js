@@ -86,13 +86,13 @@ const Listrik = ({ match }) => {
       <Colxx className="p-0">
         <Row className="align-items-center mb-2 ml-1">
           <h4 className="mr-2">Status:</h4>
-          <Badge color={status ? 'success' : 'danger'}>
+          <Badge color={status ? 'success mb-2' : 'danger mb-2'}>
             {status ? 'Hidup' : 'Mati'}
           </Badge>
         </Row>
         <Row className="align-items-center mb-4 ml-1">
           <h4 className="mr-2">Tegangan:</h4>
-          <Badge color="warning">15V</Badge>
+          <Badge color="warning mb-2">15V</Badge>
         </Row>
         <Button onClick={activeHandler} color="success mr-2">
           Aktifkan listrik

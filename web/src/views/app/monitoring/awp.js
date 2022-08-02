@@ -86,7 +86,7 @@ const Awp = ({ match }) => {
       <Colxx className="p-0">
         <Row className="align-items-center mb-4 ml-1">
           <h4 className="mr-2">Status:</h4>
-          <Badge pill color={status ? 'success' : 'danger'}>
+          <Badge color={status ? 'success mb-2' : 'danger mb-2'}>
             {status ? 'Hidup' : 'Mati'}
           </Badge>
         </Row>

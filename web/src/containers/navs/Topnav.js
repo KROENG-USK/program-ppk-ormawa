@@ -223,7 +223,7 @@ const TopNav = ({
       </div>
 
       <div className="navbar-right">
-        {/* {isDarkSwitchActive && <TopnavDarkSwitch />} */}
+        {isDarkSwitchActive && <TopnavDarkSwitch />}
         <div className="header-icons d-inline-block align-middle">
           <button
             className="header-icon btn btn-empty d-none d-sm-inline-block"

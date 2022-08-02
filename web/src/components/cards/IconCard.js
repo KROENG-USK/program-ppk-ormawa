@@ -4,7 +4,7 @@ import IntlMessages from 'helpers/IntlMessages';
 
 const IconCard = ({ className = 'mb-4', icon, title, value }) => {
   return (
-    <div className={`icon-row-item ${className}`}>
+    <div className={`icon-row-item ${className}`} style={{ minWidth: '15rem' }}>
       <Card>
         <CardBody className="text-center">
           <i className={icon} />
