@@ -27,7 +27,7 @@ const Dashboards = ({ match }) => {
       <Row>
         <Colxx className="mb-4">
           <h4 className="mb-3">Stok</h4>
-          <div className="icon-cards-row d-flex justify-content-between flex-wrap">
+          <div className="icon-cards-row d-flex flex-wrap">
             <IconCard icon="iconsminds-pepper" title="Cabai" value="80 KG" />
             <IconCard icon="iconsminds-plant" title="Pupuk" value="12 KG" />
             <IconCard icon="iconsminds-seed" title="Bibit" value="9 KG" />
@@ -86,23 +86,16 @@ const Dashboards = ({ match }) => {
         </Colxx>
         <Colxx className="mb-4">
           <h4 className="mb-3">Informasi sistem</h4>
-          <Card className="p-4 mb-4">
-            <CardTitle>Kelembapan tanah</CardTitle>
-            <div className="chart-container">
-              <LineChart shadow data={lineChartData} />
-            </div>
-          </Card>
-          <Row className="px-4 mb-2 d-flex align-items-center">
-            <h6>Status AWP:</h6>
-            <Badge color="success ml-2 mb-2">Hidup</Badge>
-          </Row>
+          <div className="icon-cards-row d-flex flex-wrap">
+            <IconCard
+              icon="iconsminds-rain-drop"
+              title="Tangki Air"
+              value="80 %"
+            />
+          </div>
           <Row className="px-4 mb-2 d-flex align-items-center">
             <h6>Status listrik:</h6>
             <Badge color="success ml-2 mb-2">Hidup</Badge>
-          </Row>
-          <Row className="px-4 mb-2 d-flex align-items-center">
-            <h6>Tegangan listrik:</h6>
-            <Badge color="warning ml-2 mb-2">15V</Badge>
           </Row>
         </Colxx>
       </Row>

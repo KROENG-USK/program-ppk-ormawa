@@ -60,20 +60,28 @@ const Listrik = ({ match }) => {
         </Colxx>
       </Row>
       <Row className="mb-4">
-        <Colxx xxs="12">
+        <Colxx xxs="6">
           <Card>
             <CardBody>
-              <CardTitle>Grafik listrik</CardTitle>
+              <CardTitle>Battery</CardTitle>
               <Row>
-                <Colxx xxs="12" lg="6" className="mb-5">
-                  <CardSubtitle>Panel surya</CardSubtitle>
+                <Colxx xxs="12" lg="12" className="mb-5">
+                  <CardSubtitle>Tegangan</CardSubtitle>
                   <div className="chart-container">
                     <LineChart shadow data={lineChartData} />
                   </div>
                 </Colxx>
-
-                <Colxx xxs="12" lg="6" className="mb-5">
-                  <CardSubtitle>Pemakaian listrik</CardSubtitle>
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
+        <Colxx xxs="6">
+          <Card>
+            <CardBody>
+              <CardTitle>Inverter</CardTitle>
+              <Row>
+                <Colxx xxs="12" lg="12" className="mb-5">
+                  <CardSubtitle>Tegangan</CardSubtitle>
                   <div className="chart-container">
                     <LineChart shadow data={lineChartData} />
                   </div>
@@ -90,9 +98,13 @@ const Listrik = ({ match }) => {
             {status ? 'Hidup' : 'Mati'}
           </Badge>
         </Row>
-        <Row className="align-items-center mb-4 ml-1">
-          <h4 className="mr-2">Tegangan:</h4>
+        <Row className="align-items-center mb-2 ml-1">
+          <h4 className="mr-2">Tegangan battery:</h4>
           <Badge color="warning mb-2">15V</Badge>
+        </Row>
+        <Row className="align-items-center mb-4 ml-1">
+          <h4 className="mr-2">Tegangan inverter:</h4>
+          <Badge color="warning mb-2">12V</Badge>
         </Row>
         <Button onClick={activeHandler} color="success mr-2">
           Aktifkan listrik

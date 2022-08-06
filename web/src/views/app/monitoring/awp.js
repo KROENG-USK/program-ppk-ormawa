@@ -16,6 +16,7 @@ import Breadcrumb from 'containers/navs/Breadcrumb';
 import { lineChartData } from 'data/charts';
 import { NotificationManager } from 'components/common/react-notifications';
 import { LineChart } from 'components/charts';
+import IconCard from 'components/cards/IconCard';
 
 const Awp = ({ match }) => {
   const [status, setStatus] = useState(true);
@@ -61,26 +62,13 @@ const Awp = ({ match }) => {
       </Row>
       <Row className="mb-4">
         <Colxx xxs="12">
-          <Card>
-            <CardBody>
-              <CardTitle>Grafik AWP</CardTitle>
-              <Row>
-                <Colxx xxs="12" lg="6" className="mb-5">
-                  <CardSubtitle>Kelembapan tanah</CardSubtitle>
-                  <div className="chart-container">
-                    <LineChart shadow data={lineChartData} />
-                  </div>
-                </Colxx>
-
-                <Colxx xxs="12" lg="6" className="mb-5">
-                  <CardSubtitle>Penyiraman otomatis</CardSubtitle>
-                  <div className="chart-container">
-                    <LineChart shadow data={lineChartData} />
-                  </div>
-                </Colxx>
-              </Row>
-            </CardBody>
-          </Card>
+          <div className="icon-cards-row d-flex flex-wrap">
+            <IconCard
+              icon="iconsminds-drop"
+              title="Kelembapan Tanah"
+              value="65 %"
+            />
+          </div>
         </Colxx>
       </Row>
       <Colxx className="p-0">
