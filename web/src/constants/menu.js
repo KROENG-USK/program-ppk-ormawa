@@ -27,7 +27,7 @@ const data = [
   },
   {
     id: 'Market',
-    icon: 'iconsminds-shopping-cart',
+    icon: 'iconsminds-shop',
     label: 'menu.market',
     to: `${adminRoot}/market`,
     subs: [
@@ -40,6 +40,11 @@ const data = [
         icon: 'iconsminds-add-cart',
         label: 'menu.beli',
         to: `${adminRoot}/market/beli`,
+      },
+      {
+        icon: 'iconsminds-shopping-basket',
+        label: 'menu.stok',
+        to: `${adminRoot}/market/stok`,
       },
     ],
   },

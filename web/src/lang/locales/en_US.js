@@ -53,6 +53,7 @@ module.exports = {
   'menu.listrik': 'Listrik',
   'menu.jual': 'Jual',
   'menu.beli': 'Beli',
+  'menu.stok': 'Stok',
 
   /* 04.Error Page */
   'pages.error-title': 'Ooops... looks like an error occurred!',

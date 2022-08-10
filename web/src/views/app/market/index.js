@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 const Jual = React.lazy(() => import('./jual'));
 const Beli = React.lazy(() => import('./beli'));
+const Stok = React.lazy(() => import('./stok'));
 const Market = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -14,6 +15,10 @@ const Market = ({ match }) => (
       <Route
         path={`${match.url}/beli`}
         render={(props) => <Beli {...props} />}
+      />
+      <Route
+        path={`${match.url}/stok`}
+        render={(props) => <Stok {...props} />}
       />
       <Redirect to="/error" />
     </Switch>
