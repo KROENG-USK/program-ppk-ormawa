@@ -32,19 +32,24 @@ const data = [
     to: `${adminRoot}/market`,
     subs: [
       {
-        icon: 'iconsminds-remove-cart',
-        label: 'menu.jual',
-        to: `${adminRoot}/market/jual`,
-      },
-      {
-        icon: 'iconsminds-add-cart',
-        label: 'menu.beli',
-        to: `${adminRoot}/market/beli`,
-      },
-      {
         icon: 'iconsminds-shopping-basket',
         label: 'menu.stok',
         to: `${adminRoot}/market/stok`,
+      },
+      {
+        icon: 'iconsminds-remove-cart',
+        label: 'menu.pengeluaran',
+        to: `${adminRoot}/market/pengeluaran`,
+      },
+      {
+        icon: 'iconsminds-add-cart',
+        label: 'menu.pemasukan',
+        to: `${adminRoot}/market/pemasukan`,
+      },
+      {
+        icon: 'iconsminds-arrow-refresh',
+        label: 'menu.riwayat',
+        to: `${adminRoot}/market/riwayat`,
       },
     ],
   },

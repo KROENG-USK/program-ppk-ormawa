@@ -51,9 +51,10 @@ module.exports = {
   'menu.awp': 'AWP',
   'menu.awp-title': 'Automatic Watering Plant',
   'menu.listrik': 'Listrik',
-  'menu.jual': 'Jual',
-  'menu.beli': 'Beli',
+  'menu.pengeluaran': 'Pengeluaran',
+  'menu.pemasukan': 'Pemasukan',
   'menu.stok': 'Stok',
+  'menu.riwayat': 'Riwayat',
 
   /* 04.Error Page */
   'pages.error-title': 'Ooops... looks like an error occurred!',
