@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Card, CardBody, CardTitle, Table, Badge } from 'reactstrap';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import Breadcrumb from 'containers/navs/Breadcrumb';
 import IconCard from 'components/cards/IconCard';
-import { LineChart } from 'components/charts';
-import { lineChartData } from 'data/charts';
 import ReactWeather, { useOpenWeather } from 'react-open-weather';
+import axios from 'axios';
+import { api } from 'constants/defaultValues';
+import { getCurrentUser } from 'helpers/Utils';
 
 const Dashboards = ({ match }) => {
   const { data, isLoading, errorMessage } = useOpenWeather({
@@ -15,6 +16,29 @@ const Dashboards = ({ match }) => {
     lang: 'id',
     unit: 'metric',
   });
+  const [tandon, setTandon] = useState(0);
+  const user = getCurrentUser();
+
+  const getTandon = async () => {
+    await axios
+      .get(`${api}/tandon`, {
+        headers: {
+          Authorization: `Bearer ${user.jwt}`,
+        },
+      })
+      .then((response) => {
+        if (!response.data.error) {
+          setTandon(response.data.data.kapasitas);
+        }
+      });
+  };
+
+  useState(() => {
+    getTandon();
+    setInterval(() => {
+      getTandon();
+    }, 5000);
+  }, []);
 
   return (
     <>
@@ -90,7 +114,7 @@ const Dashboards = ({ match }) => {
             <IconCard
               icon="iconsminds-rain-drop"
               title="Tangki Air"
-              value="80 %"
+              value={`${tandon} %`}
             />
           </div>
           <Row className="px-4 mb-2 d-flex align-items-center">

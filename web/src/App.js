@@ -7,11 +7,16 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
+import { ProtectedRoute } from 'helpers/authHelper';
 import './helpers/Firebase';
 import AppLocale from './lang';
 import ColorSwitcher from './components/common/ColorSwitcher';
 import { NotificationContainer } from './components/common/react-notifications';
-import { isMultiColorActive, adminRoot } from './constants/defaultValues';
+import {
+  isMultiColorActive,
+  adminRoot,
+  UserRole,
+} from './constants/defaultValues';
 import { getDirection } from './helpers/Utils';
 
 const ViewApp = React.lazy(() => import('./views/app'));
@@ -49,11 +54,11 @@ class App extends React.Component {
             <Suspense fallback={<div className="loading" />}>
               <Router>
                 <Switch>
-                  {/* <ProtectedRoute
+                  <ProtectedRoute
                     path={adminRoot}
                     component={ViewApp}
                     roles={[UserRole.Admin, UserRole.Editor]}
-                  /> */}
+                  />
                   <Route
                     path={adminRoot}
                     render={(props) => <ViewApp {...props} />}

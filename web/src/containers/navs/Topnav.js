@@ -9,7 +9,6 @@ import {
   DropdownItem,
   DropdownToggle,
   DropdownMenu,
-  Input,
 } from 'reactstrap';
 
 import { NavLink } from 'react-router-dom';
@@ -21,12 +20,9 @@ import {
   logoutUser,
   changeLocale,
 } from 'redux/actions';
+import { getCurrentUser } from 'helpers/Utils';
 
-import {
-  menuHiddenBreakpoint,
-  searchPath,
-  isDarkSwitchActive,
-} from 'constants/defaultValues';
+import { searchPath, isDarkSwitchActive } from 'constants/defaultValues';
 
 import { MobileMenuIcon, MenuIcon } from 'components/svg';
 import TopnavDarkSwitch from './Topnav.DarkSwitch';
@@ -43,6 +39,7 @@ const TopNav = ({
 }) => {
   const [isInFullScreen, setIsInFullScreen] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const user = getCurrentUser();
 
   const search = () => {
     history.push(`${searchPath}?key=${searchKeyword}`);
@@ -58,33 +55,6 @@ const TopNav = ({
         document.mozFullScreenElement !== null) ||
       (document.msFullscreenElement && document.msFullscreenElement !== null)
     );
-  };
-
-  const handleSearchIconClick = (e) => {
-    if (window.innerWidth < menuHiddenBreakpoint) {
-      let elem = e.target;
-      if (!e.target.classList.contains('search')) {
-        if (e.target.parentElement.classList.contains('search')) {
-          elem = e.target.parentElement;
-        } else if (
-          e.target.parentElement.parentElement.classList.contains('search')
-        ) {
-          elem = e.target.parentElement.parentElement;
-        }
-      }
-
-      if (elem.classList.contains('mobile-view')) {
-        search();
-        elem.classList.remove('mobile-view');
-        removeEventsSearch();
-      } else {
-        elem.classList.add('mobile-view');
-        addEventsSearch();
-      }
-    } else {
-      search();
-    }
-    e.stopPropagation();
   };
 
   const handleDocumentClickSearch = (e) => {
@@ -201,25 +171,6 @@ const TopNav = ({
         >
           <MobileMenuIcon />
         </NavLink>
-
-        <div className="search">
-          <Input
-            name="searchKeyword"
-            id="searchKeyword"
-            placeholder={messages['menu.search']}
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
-            // onKeyPress={(e) => handleSearchInputKeyPress(e)}
-            onKeyPress={() => {}}
-          />
-          <span
-            className="search-icon"
-            // onClick={(e) => handleSearchIconClick(e)}
-            onClick={() => {}}
-          >
-            <i className="simple-icon-magnifier" />
-          </span>
-        </div>
       </div>
 
       <div className="navbar-right">
@@ -244,7 +195,7 @@ const TopNav = ({
               className="p-0 d-flex align-items-center"
               color="empty"
             >
-              <span className="name mr-1">Admin</span>
+              <span className="name mr-1">{user.name}</span>
               <span>
                 <i
                   className="iconsminds-male-2"

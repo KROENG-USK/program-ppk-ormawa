@@ -1,7 +1,7 @@
 {
-  "name": "gogo-react",
+  "name": "awp-cpanel",
   "version": "5.3.1",
-  "description": "Gogo - React Bootstrap 4 Admin Dashboard Template",
+  "description": "Automatic Watering Plan Control Panel Web",
   "private": true,
   "dependencies": {
     "@glidejs/glide": "^3.4.1",
