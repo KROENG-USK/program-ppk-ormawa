@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import {
   Row,
   Card,
@@ -12,44 +13,104 @@ import {
   ModalFooter,
 } from 'reactstrap';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import { ThemeColors } from 'helpers/ThemeColors';
 import Breadcrumb from 'containers/navs/Breadcrumb';
-import { LineChart } from 'components/charts';
+import { BarChart, LineChart } from 'components/charts';
 import { lineChartData } from 'data/charts';
 import { NotificationManager } from 'components/common/react-notifications';
+import { getCurrentUser } from 'helpers/Utils';
+import axios from 'axios';
+import { api } from 'constants/defaultValues';
 
 const Listrik = ({ match }) => {
-  const [status, setStatus] = useState(true);
-  const [modalOpen, setModalOpen] = useState(false);
+  const colors = ThemeColors();
+  const user = getCurrentUser();
+  const [isLoading, setIsLoading] = useState(false);
+  const [dataBaterai, setDataBaterai] = useState({
+    labels: [''],
+    datasets: [
+      {
+        label: 'Baterai',
+        borderColor: colors.themeColor1,
+        backgroundColor: colors.themeColor1_10,
+        data: [0],
+        borderWidth: 1,
+      },
+    ],
+  });
+  const [dataInverter, setDataInverter] = useState({
+    labels: [''],
+    datasets: [
+      {
+        label: 'Inverter',
+        borderColor: colors.themeColor2,
+        backgroundColor: colors.themeColor2_10,
+        data: [0],
+        borderWidth: 1,
+      },
+    ],
+  });
 
-  const activeHandler = () => {
-    if (!status) {
-      setModalOpen(!modalOpen);
-    } else {
-      NotificationManager.warning(
-        'Status telah aktif!',
-        'Warning',
-        3000,
-        null,
-        null,
-        ''
-      );
-    }
+  const getBaterai = async () => {
+    await axios
+      .get(`${api}/baterai`, {
+        headers: {
+          Authorization: `Bearer ${user.jwt}`,
+        },
+      })
+      .then((response) => {
+        if (!response.data.error) {
+          setDataBaterai({
+            labels: [''],
+            datasets: [
+              {
+                label: 'Baterai',
+                borderColor: colors.themeColor1,
+                backgroundColor: colors.themeColor1_10,
+                data: [response.data.data.tegangan],
+                borderWidth: 1,
+              },
+            ],
+          });
+        }
+      });
   };
 
-  const nonActiveHandler = () => {
-    if (status) {
-      setModalOpen(!modalOpen);
-    } else {
-      NotificationManager.warning(
-        'Status telah mati!',
-        'Warning',
-        3000,
-        null,
-        null,
-        ''
-      );
-    }
+  const getInverter = async () => {
+    await axios
+      .get(`${api}/inverter`, {
+        headers: {
+          Authorization: `Bearer ${user.jwt}`,
+        },
+      })
+      .then((response) => {
+        if (!response.data.error) {
+          setDataInverter({
+            labels: [''],
+            datasets: [
+              {
+                label: 'Inverter',
+                borderColor: colors.themeColor1,
+                backgroundColor: colors.themeColor1_10,
+                data: [response.data.data.tegangan],
+                borderWidth: 1,
+              },
+            ],
+          });
+        }
+      });
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+    getBaterai();
+    getInverter();
+    setInterval(() => {
+      getBaterai();
+      getInverter();
+    }, 5000);
+    setIsLoading(false);
+  }, []);
 
   return (
     <>
@@ -59,96 +120,28 @@ const Listrik = ({ match }) => {
           <Separator className="mb-5" />
         </Colxx>
       </Row>
-      <Row className="mb-4">
-        <Colxx xxs="6">
-          <Card>
-            <CardBody>
-              <CardTitle>Battery</CardTitle>
-              <Row>
-                <Colxx xxs="12" lg="12" className="mb-5">
-                  <CardSubtitle>Tegangan</CardSubtitle>
-                  <div className="chart-container">
-                    <LineChart shadow data={lineChartData} />
-                  </div>
-                </Colxx>
-              </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
-        <Colxx xxs="6">
-          <Card>
-            <CardBody>
-              <CardTitle>Inverter</CardTitle>
-              <Row>
-                <Colxx xxs="12" lg="12" className="mb-5">
-                  <CardSubtitle>Tegangan</CardSubtitle>
-                  <div className="chart-container">
-                    <LineChart shadow data={lineChartData} />
-                  </div>
-                </Colxx>
-              </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
-      </Row>
-      <Colxx className="p-0">
-        <Row className="align-items-center mb-2 ml-1">
-          <h4 className="mr-2">Status:</h4>
-          <Badge color={status ? 'success mb-2' : 'danger mb-2'}>
-            {status ? 'Hidup' : 'Mati'}
-          </Badge>
+      {isLoading ? (
+        <div className="loading" />
+      ) : (
+        <Row className="mb-2">
+          <Colxx xxs="6" lg="3" md="4" className="mb-2 p-2">
+            <Card className="p-4">
+              <CardTitle>Baterai (%)</CardTitle>
+              <div className="chart-container">
+                <BarChart shadow data={dataBaterai} />
+              </div>
+            </Card>
+          </Colxx>
+          <Colxx xxs="6" lg="3" md="4" className="mb-2 p-2">
+            <Card className="p-4">
+              <CardTitle>Inverter (W)</CardTitle>
+              <div className="chart-container">
+                <BarChart shadow data={dataInverter} type={2} />
+              </div>
+            </Card>
+          </Colxx>
         </Row>
-        <Row className="align-items-center mb-2 ml-1">
-          <h4 className="mr-2">Tegangan battery:</h4>
-          <Badge color="warning mb-2">15V</Badge>
-        </Row>
-        <Row className="align-items-center mb-4 ml-1">
-          <h4 className="mr-2">Tegangan inverter:</h4>
-          <Badge color="warning mb-2">12V</Badge>
-        </Row>
-        <Button onClick={activeHandler} color="success mr-2">
-          Aktifkan listrik
-        </Button>
-        <Button onClick={nonActiveHandler} color="danger">
-          Matikan listrik
-        </Button>
-      </Colxx>
-      <Modal isOpen={modalOpen}>
-        <ModalHeader>
-          {status ? 'Yakin mematikan listrik?' : 'Yakin mengaktifkan listrik?'}
-        </ModalHeader>
-        <ModalFooter>
-          {status ? (
-            <Button
-              color="danger"
-              onClick={() => {
-                setStatus(false);
-                setModalOpen(!modalOpen);
-              }}
-            >
-              Matikan
-            </Button>
-          ) : (
-            <Button
-              color="success"
-              onClick={() => {
-                setStatus(true);
-                setModalOpen(!modalOpen);
-              }}
-            >
-              Aktifkan
-            </Button>
-          )}
-          <Button
-            outline
-            onClick={() => {
-              setModalOpen(!setModalOpen);
-            }}
-          >
-            Batal
-          </Button>
-        </ModalFooter>
-      </Modal>
+      )}
     </>
   );
 };

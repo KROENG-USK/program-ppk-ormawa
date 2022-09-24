@@ -1,10 +1,9 @@
 /* eslint-disable prefer-rest-params */
 import React, { useEffect, useRef, useState } from 'react';
 import { Chart } from 'chart.js';
+import { barChartOptions, barChartOptions2 } from './config';
 
-import { barChartOptions } from './config';
-
-const Bar = ({ data, shadow = false }) => {
+const Bar = ({ data, shadow = false, type = 1 }) => {
   const chartContainer = useRef(null);
   const [, setChartInstance] = useState(null);
 
@@ -34,12 +33,12 @@ const Bar = ({ data, shadow = false }) => {
       const context = chartContainer.current.getContext('2d');
       const newChartInstance = new Chart(context, {
         type: shadow ? 'barWithShadow' : 'bar',
-        options: barChartOptions,
+        options: type === 1 ? barChartOptions : barChartOptions2,
         data,
       });
       setChartInstance(newChartInstance);
     }
-  }, [chartContainer, data, shadow]);
+  }, [chartContainer, data, shadow, type]);
 
   return <canvas ref={chartContainer} />;
 };

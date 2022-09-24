@@ -50,6 +50,14 @@ const Dashboards = ({ match }) => {
       </Row>
       <Row>
         <Colxx className="mb-4">
+          <h4 className="mb-3">Informasi sistem</h4>
+          <div className="icon-cards-row d-flex flex-wrap">
+            <IconCard
+              icon="iconsminds-rain-drop"
+              title="Tangki Air"
+              value={`${tandon} %`}
+            />
+          </div>
           <h4 className="mb-3">Stok</h4>
           <div className="icon-cards-row d-flex flex-wrap">
             <IconCard icon="iconsminds-pepper" title="Cabai" value="80 KG" />
@@ -107,20 +115,6 @@ const Dashboards = ({ match }) => {
               </tbody>
             </Table>
           </Card>
-        </Colxx>
-        <Colxx className="mb-4">
-          <h4 className="mb-3">Informasi sistem</h4>
-          <div className="icon-cards-row d-flex flex-wrap">
-            <IconCard
-              icon="iconsminds-rain-drop"
-              title="Tangki Air"
-              value={`${tandon} %`}
-            />
-          </div>
-          <Row className="px-4 mb-2 d-flex align-items-center">
-            <h6>Status listrik:</h6>
-            <Badge color="success ml-2 mb-2">Hidup</Badge>
-          </Row>
         </Colxx>
       </Row>
       <h4 className="mb-3">Informasi lahan</h4>
