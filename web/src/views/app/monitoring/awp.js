@@ -54,9 +54,7 @@ const Awp = ({ match }) => {
         label: 'Sensor kelembapan tanah',
         borderColor: colors.themeColor1,
         backgroundColor: colors.themeColor1_10,
-        data: [
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        ],
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         borderWidth: 1,
       },
     ],
@@ -73,49 +71,57 @@ const Awp = ({ match }) => {
   });
 
   const getDataKelembapan = async () => {
-    await axios
-      .get(`${api}/sensor`, {
-        headers: {
-          Authorization: `Bearer ${user.jwt}`,
-        },
-      })
-      .then((response) => {
-        if (!response.data.error) {
-          const kelembapanList = Object.values(response.data.data);
-          const labels = [...kelembapanList.keys()].map((i) => i + 1);
-          setDataKelembapan({
-            labels,
-            datasets: [
-              {
-                label: 'Sensor kelembapan tanah',
-                borderColor: colors.themeColor1,
-                backgroundColor: colors.themeColor1_10,
-                data: kelembapanList,
-                borderWidth: 1,
-              },
-            ],
-          });
-        }
-      });
+    try {
+      await axios
+        .get(`${api}/sensor`, {
+          headers: {
+            Authorization: `Bearer ${user.jwt}`,
+          },
+        })
+        .then((response) => {
+          if (!response.data.error) {
+            const kelembapanList = Object.values(response.data.data);
+            const labels = [...kelembapanList.keys()].map((i) => i + 1);
+            setDataKelembapan({
+              labels,
+              datasets: [
+                {
+                  label: 'Sensor kelembapan tanah',
+                  borderColor: colors.themeColor1,
+                  backgroundColor: colors.themeColor1_10,
+                  data: kelembapanList,
+                  borderWidth: 1,
+                },
+              ],
+            });
+          }
+        });
+    } catch (e) {
+      NotificationManager.error(e.message, 'Error', 3000, null, null, '');
+    }
   };
 
   const getKran = async () => {
-    await axios
-      .get(`${api}/saklar-kran`, {
-        headers: {
-          Authorization: `Bearer ${user.jwt}`,
-        },
-      })
-      .then((response) => {
-        if (!response.data.error) {
-          setKran({
-            'Kran 1': response.data.data.kran_1 ? 'Hidup' : 'Mati',
-            'Kran 2': response.data.data.kran_2 ? 'Hidup' : 'Mati',
-            'Kran 3': response.data.data.kran_3 ? 'Hidup' : 'Mati',
-            'Kran 4': response.data.data.kran_4 ? 'Hidup' : 'Mati',
-          });
-        }
-      });
+    try {
+      await axios
+        .get(`${api}/saklar-kran`, {
+          headers: {
+            Authorization: `Bearer ${user.jwt}`,
+          },
+        })
+        .then((response) => {
+          if (!response.data.error) {
+            setKran({
+              'Kran 1': response.data.data.kran_1 ? 'Hidup' : 'Mati',
+              'Kran 2': response.data.data.kran_2 ? 'Hidup' : 'Mati',
+              'Kran 3': response.data.data.kran_3 ? 'Hidup' : 'Mati',
+              'Kran 4': response.data.data.kran_4 ? 'Hidup' : 'Mati',
+            });
+          }
+        });
+    } catch (e) {
+      NotificationManager.error(e.message, 'Error', 3000, null, null, '');
+    }
   };
 
   const setKranValue = async (kranName, value) => {
@@ -129,58 +135,57 @@ const Awp = ({ match }) => {
       Hidup: false,
       Mati: true,
     };
-    await axios
-      .get(
-        `${api}/saklar-kran?saklar=${krans[kranName]}&value=${values[value]}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.jwt}`,
-          },
-        }
-      )
-      .then((response) => {
-        const switchStatus = {
-          Hidup: 'dimatikan',
-          Mati: 'dihidupkan',
-        };
-        if (!response.data.error) {
-          getKran();
-          NotificationManager.info(
-            `${kranName} berhasil ${switchStatus[value]}.`,
-            'Info',
-            3000,
-            null,
-            null,
-            ''
-          );
-        } else {
-          NotificationManager.error(
-            response.data.data.message,
-            'Error',
-            3000,
-            null,
-            null,
-            ''
-          );
-        }
-      });
+    try {
+      await axios
+        .get(
+          `${api}/saklar-kran?saklar=${krans[kranName]}&value=${values[value]}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.jwt}`,
+            },
+          }
+        )
+        .then((response) => {
+          const switchStatus = {
+            Hidup: 'dimatikan',
+            Mati: 'dihidupkan',
+          };
+          if (!response.data.error) {
+            getKran();
+            NotificationManager.success(
+              `${kranName} berhasil ${switchStatus[value]}.`,
+              'Success',
+              3000,
+              null,
+              null,
+              ''
+            );
+          }
+        });
+    } catch (e) {
+      NotificationManager.error(e.message, 'Error', 3000, null, null, '');
+    }
   };
 
   const getPompa = async () => {
-    await axios
-      .get(`${api}/saklar-pompa`, {
-        headers: {
-          Authorization: `Bearer ${user.jwt}`,
-        },
-      })
-      .then((response) => {
-        if (!response.data.error) {
-          setPompa({
-            'Pompa 1': response.data.data.pompa_1 ? 'Hidup' : 'Mati',
-            'Pompa 2': response.data.data.pompa_2 ? 'Hidup' : 'Mati',
-          });
-        }
-      });
+    try {
+      await axios
+        .get(`${api}/saklar-pompa`, {
+          headers: {
+            Authorization: `Bearer ${user.jwt}`,
+          },
+        })
+        .then((response) => {
+          if (!response.data.error) {
+            setPompa({
+              'Pompa 1': response.data.data.pompa_1 ? 'Hidup' : 'Mati',
+              'Pompa 2': response.data.data.pompa_2 ? 'Hidup' : 'Mati',
+            });
+          }
+        });
+    } catch (e) {
+      NotificationManager.error(e.message, 'Error', 3000, null, null, '');
+    }
   };
 
   const setPompaValue = async (pompaName, value) => {
@@ -192,41 +197,36 @@ const Awp = ({ match }) => {
       Hidup: false,
       Mati: true,
     };
-    await axios
-      .get(
-        `${api}/saklar-pompa?saklar=${pompas[pompaName]}&value=${values[value]}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.jwt}`,
-          },
-        }
-      )
-      .then((response) => {
-        const switchStatus = {
-          Hidup: 'dimatikan',
-          Mati: 'dihidupkan',
-        };
-        if (!response.data.error) {
-          getPompa();
-          NotificationManager.info(
-            `${pompaName} berhasil ${switchStatus[value]}.`,
-            'Info',
-            3000,
-            null,
-            null,
-            ''
-          );
-        } else {
-          NotificationManager.error(
-            response.data.data.message,
-            'Error',
-            3000,
-            null,
-            null,
-            ''
-          );
-        }
-      });
+    try {
+      await axios
+        .get(
+          `${api}/saklar-pompa?saklar=${pompas[pompaName]}&value=${values[value]}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.jwt}`,
+            },
+          }
+        )
+        .then((response) => {
+          const switchStatus = {
+            Hidup: 'dimatikan',
+            Mati: 'dihidupkan',
+          };
+          if (!response.data.error) {
+            getPompa();
+            NotificationManager.success(
+              `${pompaName} berhasil ${switchStatus[value]}.`,
+              'Success',
+              3000,
+              null,
+              null,
+              ''
+            );
+          }
+        });
+    } catch (e) {
+      NotificationManager.error(e.message, 'Error', 3000, null, null, '');
+    }
   };
 
   useEffect(() => {
