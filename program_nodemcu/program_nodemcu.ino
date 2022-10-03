@@ -6,6 +6,7 @@
 // konfigurasi komunikasi arduino
 SoftwareSerial atmega(4, 5);
 
+// buat variable sensor
 // Setting find WiFi Hotspot
 #ifndef STASSID
 #define STASSID "@Wifi.com"
@@ -36,10 +37,10 @@ const String path_13 = "data_sensor/kelembaban_13";
 const String path_14 = "data_sensor/kelembaban_14";
 const String path_15 = "data_sensor/kelembaban_15";
 const String path_16 = "data_sensor/kelembaban_16";
-const String path_relay_1 = "saklar_kran/kran_1";
-const String path_relay_2 = "saklar_kran/kran_2";
-const String path_relay_3 = "saklar_kran/kran_3";
-const String path_relay_4 = "saklar_kran/kran_4";
+const String path_kran_1 = "saklar_kran/kran_1";
+const String path_kran_2 = "saklar_kran/kran_2";
+const String path_kran_3 = "saklar_kran/kran_3";
+const String path_kran_4 = "saklar_kran/kran_4";
 
 FirebaseData firebaseData; //firebase function
 
@@ -50,8 +51,8 @@ WiFiEventHandler wifiDisconnectHandler;
 //void ICACHE_RAM_ATTR loop(); // jika nodemcu intrrupt
 
 void setup() {
-  Serial.begin(9600);
-  atmega.begin(9600);
+  Serial.begin(115200);
+  atmega.begin(115200);
   // setup wifi connection
   // Register event handlers
   wifiConnectHandler = WiFi.onStationModeGotIP(onWifiConnect);
@@ -79,11 +80,12 @@ void setup() {
 
 void loop() {
   DynamicJsonBuffer jsonBuffer;
-  JsonObject& data = jsonBuffer.parseObject(atmega);
+  JsonObject& data = jsonBuffer.parseObject(Serial);
   if(data == JsonObject::invalid()){
     jsonBuffer.clear();
-    atmega.flush();
-    Serial.println(F("Data Json Invalid"));    
+    // atmega.flush();
+    // Serial.println(F("Data Json Invalid"));
+    return;
   }
 
   int getdata_1 = data["sensor_1"]; int getdata_2 = data["sensor_2"];
@@ -95,8 +97,12 @@ void loop() {
   int getdata_13 = data["sensor_13"]; int getdata_14 = data["sensor_14"];
   int getdata_15 = data["sensor_15"]; int getdata_16 = data["sensor_16"];
   
+  // kirim data ke firebase
   push_data(getdata_1, getdata_2, getdata_3, getdata_4, getdata_5, getdata_6, getdata_7, getdata_8, getdata_9, getdata_10, getdata_11, getdata_12, getdata_13, getdata_14, getdata_15, getdata_16);
-  
+
+  // kirim perintah ke arduino
+  program_relay();
+
   delay(15);
 }
 
