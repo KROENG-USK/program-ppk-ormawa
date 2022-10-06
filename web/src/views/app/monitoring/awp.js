@@ -65,10 +65,6 @@ const Awp = ({ match }) => {
     'Kran 3': 'Mati',
     'Kran 4': 'Mati',
   });
-  const [pompa, setPompa] = useState({
-    'Pompa 1': 'Mati',
-    'Pompa 2': 'Mati',
-  });
 
   const getDataKelembapan = async () => {
     try {
@@ -167,77 +163,13 @@ const Awp = ({ match }) => {
     }
   };
 
-  const getPompa = async () => {
-    try {
-      await axios
-        .get(`${api}/saklar-pompa`, {
-          headers: {
-            Authorization: `Bearer ${user.jwt}`,
-          },
-        })
-        .then((response) => {
-          if (!response.data.error) {
-            setPompa({
-              'Pompa 1': response.data.data.pompa_1 ? 'Hidup' : 'Mati',
-              'Pompa 2': response.data.data.pompa_2 ? 'Hidup' : 'Mati',
-            });
-          }
-        });
-    } catch (e) {
-      NotificationManager.error(e.message, 'Error', 3000, null, null, '');
-    }
-  };
-
-  const setPompaValue = async (pompaName, value) => {
-    const pompas = {
-      'Pompa 1': 'pompa_1',
-      'Pompa 2': 'pompa_2',
-    };
-    const values = {
-      Hidup: false,
-      Mati: true,
-    };
-    try {
-      await axios
-        .get(
-          `${api}/saklar-pompa?saklar=${pompas[pompaName]}&value=${values[value]}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.jwt}`,
-            },
-          }
-        )
-        .then((response) => {
-          const switchStatus = {
-            Hidup: 'dimatikan',
-            Mati: 'dihidupkan',
-          };
-          if (!response.data.error) {
-            getPompa();
-            NotificationManager.success(
-              `${pompaName} berhasil ${switchStatus[value]}.`,
-              'Success',
-              3000,
-              null,
-              null,
-              ''
-            );
-          }
-        });
-    } catch (e) {
-      NotificationManager.error(e.message, 'Error', 3000, null, null, '');
-    }
-  };
-
   useEffect(() => {
     setIsLoading(true);
     getDataKelembapan();
     getKran();
-    getPompa();
     setInterval(() => {
       getDataKelembapan();
       getKran();
-      getPompa();
     }, 5000);
     setIsLoading(false);
   }, []);
@@ -303,45 +235,6 @@ const Awp = ({ match }) => {
               </Table>
             </Card>
           </Colxx>
-          <Colxx className="p-0 mb-3">
-            <Card className="p-4">
-              <CardTitle>Saklar pompa</CardTitle>
-              <Table striped>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Pompa</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.keys(pompa).map((key, index) => (
-                    <tr key={key}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{key}</td>
-                      <td>
-                        <Badge
-                          color={pompa[key] === 'Hidup' ? 'success' : 'danger'}
-                        >
-                          {pompa[key]}
-                        </Badge>
-                      </td>
-                      <td>
-                        <Button
-                          className="btn-xs btn-shadow"
-                          color="info"
-                          onClick={() => setPompaModal([true, key, pompa[key]])}
-                        >
-                          {pompa[key] === 'Hidup' ? 'Matikan' : 'Hidupkan'}
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Card>
-          </Colxx>
         </>
       )}
       <Modal isOpen={kranModal[0]}>
@@ -376,44 +269,6 @@ const Awp = ({ match }) => {
             outline
             onClick={() => {
               setKranModal([!kranModal[0], '', '']);
-            }}
-          >
-            Batal
-          </Button>
-        </ModalFooter>
-      </Modal>
-      <Modal isOpen={pompaModal[0]}>
-        <ModalHeader>
-          {pompaModal[2] === 'Hidup'
-            ? `Yakin mematikan ${pompaModal[1]}?`
-            : `Yakin menghidupkan kran ${pompaModal[1]}?`}
-        </ModalHeader>
-        <ModalFooter>
-          {pompaModal[2] === 'Hidup' ? (
-            <Button
-              color="danger"
-              onClick={() => {
-                setPompaValue(pompaModal[1], pompaModal[2]);
-                setPompaModal([!pompaModal[0], '', '']);
-              }}
-            >
-              Matikan
-            </Button>
-          ) : (
-            <Button
-              color="success"
-              onClick={() => {
-                setPompaValue(pompaModal[1], pompaModal[2]);
-                setPompaModal([!pompaModal[0], '', '']);
-              }}
-            >
-              Hidupkan
-            </Button>
-          )}
-          <Button
-            outline
-            onClick={() => {
-              setPompaModal([!pompaModal[0], '', '']);
             }}
           >
             Batal
