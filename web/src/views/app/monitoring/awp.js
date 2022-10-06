@@ -25,7 +25,6 @@ const Awp = ({ match }) => {
   const colors = ThemeColors();
   const user = getCurrentUser();
   const [kranModal, setKranModal] = useState([false, '', '']);
-  const [pompaModal, setPompaModal] = useState([false, '', '']);
   const [isLoading, setIsLoading] = useState(false);
   const [dataKelembapan, setDataKelembapan] = useState({
     labels: [
