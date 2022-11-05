@@ -4,13 +4,18 @@
 #include <SoftwareSerial.h>
 
 // konfigurasi komunikasi arduino
-SoftwareSerial atmega(4, 5);
+SoftwareSerial atmega(5, 4);
 
 // buat variable sensor
 // Setting find WiFi Hotspot
 #ifndef STASSID
-#define STASSID "@Wifi.com"
-#define STAPSK "Hostpot_ahul7"
+// #define STASSID "@Wifi.com"
+// #define STAPSK "Hostpot_ahul7"
+#define STASSID "awp_wifi"
+#define STAPSK "ppkormawa2022"
+// #define STASSID "semangat"
+// #define STAPSK "simollana"
+
 #endif
 
 const char* ssid = STASSID;
